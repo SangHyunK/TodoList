@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="todo.dao.TodoDao">
+	<resultMap type="todo" id="todoResultMap">
+		<id column="TNO" property="tno" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENT" property="content" />
+		<result column="PRIORITY" property="priority" />
+		<result column="PER" property="per" />
+	</resultMap>
+	
+	<select id="selectList" resultMap="todoResultMap">
+		select TNO, TITLE, PRIORITY
+		from TODO_LISTS
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="todoResultMap">
+		select TNO, TITLE, CONTENT, PRIORITY, PER
+		from TODO_LISTS
+		where TNO=#{value}
+	</select>
+
+	<insert id="insert" parameterType="todo">
+		insert into TODO_LISTS(TITLE, CONTENT, PRIORITY, PER)
+		values (#{title}, #{content}, #{priority}, #{per})
+	</insert>
+	
+	<update id="update" parameterType="map">
+		update TODO_LISTS
+		<set>
+			<if test="title!=null">TITLE=#{title},</if>
+			<if test="content!=null">CONTENT=#{content},</if>
+			<if test="priority!=null">PRIORITY=#{priority},</if>
+			<if test="per!=null">PER=#{per}</if>
+		</set>
+		where TNO=#{tno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from PROJECTS
+		where TNO=#{value}
+	</delete>
+</mapper>

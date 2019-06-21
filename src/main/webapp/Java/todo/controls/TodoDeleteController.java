@@ -2,17 +2,16 @@ package todo.controls;
 
 import java.util.Map;
 
-import spms.annotation.Component;
-import spms.bind.DataBinding;
-import spms.controls.Controller;
-import spms.dao.ProjectDao;
+import todo.annotation.Component;
+import todo.bind.DataBinding;
+import todo.dao.TodoDao;
 
-@Component("/project/delete.do")
+@Component("/todo/delete.do")
 public class TodoDeleteController implements Controller, DataBinding {
-  ProjectDao projectDao;
+  TodoDao todoDao;
   
-  public TodoDeleteController setProjectDao(ProjectDao projectDao) {
-    this.projectDao = projectDao;
+  public TodoDeleteController setTodoDao(TodoDao todoDao) {
+    this.todoDao = todoDao;
     return this;
   }
   
@@ -25,7 +24,7 @@ public class TodoDeleteController implements Controller, DataBinding {
   @Override
   public String execute(Map<String, Object> model) throws Exception {
     Integer no = (Integer)model.get("no");
-    projectDao.delete(no);
+    todoDao.delete(no);
     
     return "redirect:list.do";
   }

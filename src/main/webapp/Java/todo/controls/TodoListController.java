@@ -3,31 +3,22 @@ package todo.controls;
 import java.util.HashMap;
 import java.util.Map;
 
-import spms.annotation.Component;
-import spms.bind.DataBinding;
-import spms.dao.ProjectDao;
+import todo.annotation.Component;
+import todo.dao.TodoDao;
 
-@Component("/project/list.do")
-public class TodoListController implements Controller, DataBinding {
-  ProjectDao projectDao;
+@Component("/todo/list.do")
+public class TodoListController implements Controller {
+  TodoDao todoDao;
   
-  public TodoListController setMemberDao(ProjectDao projectDao) {
-    this.projectDao = projectDao;
+  public TodoListController setTodoDao(TodoDao todoDao) {
+    this.todoDao = todoDao;
     return this;
   }
 
   @Override
   public String execute(Map<String, Object> model) throws Exception {
-	HashMap<String, Object> paramMap = new HashMap<String, Object>();
-	paramMap.put("orderCond", model.get("orderCond"));
-    model.put("projects", projectDao.selectList(paramMap));
+	HashMap<String, Object> paramMap = new HashMap<>();
+    model.put("projects", todoDao.selectList());
     return "/project/ProjectList.jsp";
-  }
-  
-  @Override
-  public Object[] getDataBinders() {
-	  return new Object[] {
-		  "orderCond", String.class
-	  };
   }
 }

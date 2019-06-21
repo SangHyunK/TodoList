@@ -2,35 +2,34 @@ package todo.controls;
 
 import java.util.Map;
 
-import spms.annotation.Component;
-import spms.bind.DataBinding;
-import spms.dao.ProjectDao;
-import spms.vo.Project;
 import todo.annotation.Component;
+import todo.bind.DataBinding;
+import todo.dao.TodoDao;
+import todo.vo.Todo;
 
-@Component("/project/add.do")
+@Component("/todo/add.do")
 public class TodoAddController implements Controller, DataBinding {
-  ProjectDao projectDao;
+  TodoDao todoDao;
   
-  public TodoAddController setProjectDao(ProjectDao projectDao) {
-    this.projectDao = projectDao;
+  public TodoAddController setTodoDao(TodoDao todoDao) {
+    this.todoDao = todoDao;
     return this;
   }
   
   public Object[] getDataBinders() {
     return new Object[]{
-        "project", spms.vo.Project.class
+        "todo", todo.vo.Todo.class
     };
   }
   
   @Override
   public String execute(Map<String, Object> model) throws Exception {
-    Project project = (Project)model.get("project");
-    if (project.getTitle() == null) {
-      return "/project/ProjectForm.jsp";
+    Todo todo = (Todo)model.get("todo");
+    if (todo.getTitle() == null) {
+      return "/todo/todoForm.jsp";
       
     } else {
-      projectDao.insert(project);
+      todoDao.insert(todo);
       return "redirect:list.do";
     }
   }
