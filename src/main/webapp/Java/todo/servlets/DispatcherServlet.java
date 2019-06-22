@@ -27,6 +27,7 @@ public class DispatcherServlet extends HttpServlet {
             HashMap<String,Object> model = new HashMap<>();
             model.put("session", request.getSession());
 
+            System.out.println("servletPath = " + servletPath);
             Controller pageController = (Controller) ctx.getBean(servletPath);
             if (pageController == null) {
                 throw new Exception("요청한 서비스를 찾을 수 없습니다.");
